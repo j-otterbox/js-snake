@@ -1,4 +1,4 @@
-# Snake JS
+# JS Snake
 
 <br>
 
@@ -10,7 +10,7 @@ Try it [here](https://j-otterbox.github.io/js-snake/)
 
 <br>
 
-![Calculator App Demo](https://github.com/j-otterbox/js-calculator/blob/main/calc-app-demo.gif "Calculator app in use")
+![Snake Game Demo](https://github.com/j-otterbox/js-snake/blob/main/snake-game-demo.gif "Snake game in use")
 
 ## Summary
 
