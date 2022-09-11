@@ -66,8 +66,8 @@ const fruit = {
     this.y = y;
 
     // update on grid
-    this.domRef.style.left = fruit.x + "px";
-    this.domRef.style.bottom = fruit.y + "px";
+    this.domRef.style.left = this.x + "px";
+    this.domRef.style.bottom = this.y + "px";
 
     // randomize image
     const randNum = Math.ceil(Math.random() * 9);
