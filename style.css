@@ -1,0 +1,61 @@
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #30336b;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+main {
+  position: relative;
+}
+
+.grid {
+  background: #130f40;
+  height: 500px;
+  width: 500px;
+  /* border: 2px solid #95afc0; */
+}
+
+.grid-overlay {
+  /* position */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  /* layout orientation */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.start-btn {
+  background: #dff9fb;
+  margin-top: 8px;
+  border-radius: 4px;
+  padding: 8px 16px;
+}
+
+.fruit,
+.snake {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  border-radius: 5px;
+}
+
+.head {
+  background: red;
+}
+
+.tail {
+  background: green;
+  /* svisibility: hidden; */
+}
+
+.hidden {
+  visibility: hidden;
+}
