@@ -36,7 +36,7 @@ const snake = {
   getHead() {
     return this.segments[0];
   },
-  refresh() {
+  redraw() {
     for (const elem of this.segments) {
       elem.domRef.style.left = elem.x + "px";
       elem.domRef.style.bottom = elem.y + "px";
@@ -48,6 +48,36 @@ const snake = {
       seg.domRef.remove();
     }
     this.segments = [];
+  },
+  move() {
+    // save coordinates of last seg BEFORE updating
+    const currLast = this.segments.length - 1;
+    this.prevLast.x = this.segments[currLast].x;
+    this.prevLast.y = this.segments[currLast].y;
+
+    // update snake segments back-to-front
+    for (let i = currLast; i >= 0; i--) {
+      if (i > 0) {
+        this.segments[i].x = this.segments[i - 1].x;
+        this.segments[i].y = this.segments[i - 1].y;
+      } else {
+        // manually update head
+        switch (this.dir) {
+          case "u":
+            this.segments[i].y += 20;
+            break;
+          case "l":
+            this.segments[i].x -= 20;
+            break;
+          case "d":
+            this.segments[i].y -= 20;
+            break;
+          case "r":
+            this.segments[i].x += 20;
+            break;
+        }
+      }
+    }
   },
 };
 
@@ -130,69 +160,37 @@ function toggleGridOverlay() {
 
 function startGame() {
   snake.addNewSegment();
-  snake.refresh();
+  snake.redraw();
   fruit.placeRandom();
   fruit.show();
   game.intervalId = setInterval(updateGame, game.intervalLen);
 }
 
 function updateGame() {
-  // save coordinates of last seg BEFORE updating
-  const currLast = snake.segments.length - 1;
-  snake.prevLast.x = snake.segments[currLast].x;
-  snake.prevLast.y = snake.segments[currLast].y;
-
-  // update snake segments back-to-front
-  for (let i = currLast; i >= 0; i--) {
-    if (i > 0) {
-      snake.segments[i].x = snake.segments[i - 1].x;
-      snake.segments[i].y = snake.segments[i - 1].y;
-    } else {
-      // manually update head
-      switch (snake.dir) {
-        case "u":
-          snake.segments[i].y += 20;
-          break;
-        case "l":
-          snake.segments[i].x -= 20;
-          break;
-        case "d":
-          snake.segments[i].y -= 20;
-          break;
-        case "r":
-          snake.segments[i].x += 20;
-          break;
-      }
-    }
-  }
+  snake.move();
 
   if (hasEatenFruit()) {
-    fruit.placeRandom();
-
-    snake.addNewSegment();
-    snake.refresh();
-
-    game.state.score += 1;
-    updateScore(game.state.score);
+    handleEatenFruit();
   } else if (isOutOfBounds() || hasSelfCollided()) {
-    clearInterval(game.intervalId); // end game
-
-    game.state.score = 0;
-    updateScore(game.state.score);
-
-    snake.reset();
-    fruit.hide();
-
-    prepGameOverPrompt();
-    toggleGridOverlay(); // display game over prompt
+    handleCollision();
   } else {
-    snake.refresh();
+    snake.redraw();
   }
 }
 
 function hasEatenFruit() {
   const head = snake.getHead();
   return head.x === fruit.x && head.y === fruit.y;
+}
+
+function handleEatenFruit() {
+  fruit.placeRandom();
+
+  snake.addNewSegment();
+  snake.redraw();
+
+  game.state.score += 1;
+  updateScore(game.state.score);
 }
 
 function updateScore(score) {
@@ -210,6 +208,19 @@ function hasSelfCollided() {
   return snake.segments
     .slice(1)
     .some((seg) => seg.x === head.x && seg.y === head.y);
+}
+
+function handleCollision() {
+  clearInterval(game.intervalId); // end game
+
+  game.state.score = 0;
+  updateScore(game.state.score);
+
+  snake.reset();
+  fruit.hide();
+
+  prepGameOverPrompt();
+  toggleGridOverlay(); // display game over prompt
 }
 
 function prepGameOverPrompt() {
