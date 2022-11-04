@@ -18,7 +18,7 @@ This is a clone of the classic arcade game, Snake, that I built for SDMM. This w
 
 The biggest hurdle I had was figuring out how to move the snake during each cycle while leaving room for adding a new segment if a fruit was consumed by the snake. It took a little trial and error but once it clicked it made perfect sense. 
 
-After completing the first iteration of the project, I went over it some time later with the intent of applying some intermediate concepts, specifically refactoring code where possible to reduce coupling. My code seemed cohesive enough, meaning code that logically belonged together was already grouped, either in a class or simply the way the code was structured. However, I did have many functions that relied on global variables. While this is slightly nicer to read, it can make testing difficult, so I refactored code where I needed to so that it behaves more like a small testable unit.
+After completing the first iteration of the project, I went over it some time later with the intent of applying some intermediate concepts, specifically refactoring code where possible to reduce coupling. My code seemed cohesive enough, meaning code that logically belonged together was already grouped, either in a class or simply the way the code was structured. However, I did have many functions that relied on global variables. While this is slightly nicer to read, it can make testing difficult, so I refactored code where I needed to so that it behaves more like a small testable unit. Even though this project is small in scope, writing compact and easily testable functions is good to practice.
 
 ## Author
 
